@@ -7,6 +7,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import Skeleton from "@mui/material/Skeleton";
+import TextField from "@mui/material/TextField";
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
@@ -22,14 +23,14 @@ import { useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import "./index.css";
 import BasicModal from "../basic-model";
-const language = "en";
-
 import {
   FacebookShareButton,
   TwitterShareButton,
   WhatsappShareButton,
 } from "react-share";
 import { FacebookIcon, TwitterIcon, WhatsappIcon } from "react-share";
+const language = "en";
+
 function Media(props) {
   const navigate = useNavigate();
   const { loading, data, uid, likeHandler } = props;
@@ -273,15 +274,15 @@ export default function DetailsCardCom({ data, loading, path }) {
     }
   };
 
-  // Clipboard functionality
-  const [copied, setCopied] = useState(false);
-  const handleCopy = () => {
-    navigator.clipboard.writeText(url).then(() => {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+  // shareHandler
+  const shareHandler = async () => {
+    let share = data?.share;
+    share += 1;
+    const blogRef = doc(db, "blogs", data?.blogID);
+    await updateDoc(blogRef, {
+      share: share,
     });
   };
-
   return (
     <div>
       <Box sx={{ flexGrow: 1 }}>
@@ -331,14 +332,23 @@ export default function DetailsCardCom({ data, loading, path }) {
                 className="allSocialButtons"
                 size={{ xl: 2, lg: 2, md: 4, sm: 6, xs: 12 }}
               >
-                <FacebookShareButton>
-                  <FacebookIcon size={32} round={true} />
+                <FacebookShareButton
+                  onClick={shareHandler}
+                  url={`fadsfds/${path}`}
+                >
+                  <FacebookIcon size={40} round={true} />
                 </FacebookShareButton>
-                <TwitterShareButton>
-                  <TwitterIcon size={32} round={true} />
+                <TwitterShareButton
+                  onClick={shareHandler}
+                  url={`fadsfds/${path}`}
+                >
+                  <TwitterIcon size={40} round={true} />
                 </TwitterShareButton>
-                <WhatsappShareButton>
-                  <WhatsappIcon size={32} round={true} />
+                <WhatsappShareButton
+                  onClick={shareHandler}
+                  url={`fadsfds/${path}`}
+                >
+                  <WhatsappIcon size={40} round={true} />
                 </WhatsappShareButton>
               </Grid>
               <Grid
@@ -351,20 +361,27 @@ export default function DetailsCardCom({ data, loading, path }) {
               className="copyURL"
               size={{ xl: 12, lg: 12, md: 12, sm: 12, xs: 12 }}
             >
-              <b style={{ textAlign: "center" }}>Copy URL</b>
-              <button
-                onClick={handleCopy}
-                className={`flex items-center justify-center p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-200 ${
-                  copied ? "bg-green-600 hover:bg-green-700" : ""
-                }`}
+              {/* <b style={{ textAlign: "center" }}>Copy URL : #</b> */}
+              <Grid
+                className="TextField"
+                size={{ xl: 10, lg: 10, md: 9, sm: 8, xs: 12 }}
               >
-                {copied ? (
-                  <FaClipboardCheck size={24} />
-                ) : (
-                  <FaRegClipboard size={16} />
-                )}
-                <span className="ml-2">{copied ? "Copied!" : "Copy URL"}</span>
-              </button>
+                <TextField
+                  id="outlined-basic"
+                  label="Copy URL"
+                  variant="outlined"
+                  className="textURL"
+                  // value={}
+                />
+              </Grid>
+              <Grid
+                className="textURLBtn"
+                size={{ xl: 2, lg: 2, md: 3, sm: 4, xs: 12 }}
+              >
+                <Button variant="contained" onclick="copy('outlined-basic')">
+                  Copy URL
+                </Button>
+              </Grid>
             </Grid>
           </Grid>
           <BasicModal

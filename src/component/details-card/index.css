@@ -105,9 +105,32 @@
   margin-top: 3px;
 }
 .copyURL {
-  background-color: aqua;
+  /* background-color: aqua; */
   /* text-align: center !important; */
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.TextField {
+  /* width: 100%; */
+  padding: 10px;
+}
+.URL-copy {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.TextField {
+  /* background-color: rgb(23, 145, 90); */
+  /* height: 50px; */
+}
+.textURLBtn {
+  /* background-color: antiquewhite; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.textURL {
+  width: 100% !important;
+ 
 }
