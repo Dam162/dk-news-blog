@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import CommentComponent from "../comment-comp";
 import PropTypes from "prop-types";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
@@ -448,7 +449,7 @@ export default function DetailsCardCom({ data, loading, path }) {
             >
               <Grid
                 className="Avatar"
-                size={{ xl: 2, lg: 2, md: 3, sm: 3, xs: 12 }}
+                size={{ xl: 2, lg: 2, md: 3, sm: 12, xs: 12 }}
               >
                 <Avatar
                   className="avatarSelf"
@@ -459,7 +460,7 @@ export default function DetailsCardCom({ data, loading, path }) {
               </Grid>
               <Grid
                 className="TextField"
-                size={{ xl: 8, lg: 8, md: 6, sm: 6, xs: 12 }}
+                size={{ xl: 8, lg: 8, md: 6, sm: 12, xs: 12 }}
               >
                 <TextField
                   id="outlined-textarea"
@@ -474,7 +475,7 @@ export default function DetailsCardCom({ data, loading, path }) {
               </Grid>
               <Grid
                 className="textURLBtn"
-                size={{ xl: 2, lg: 2, md: 3, sm: 3, xs: 12 }}
+                size={{ xl: 2, lg: 2, md: 3, sm: 12, xs: 12 }}
               >
                 <Button
                   onClick={commentHandler}
@@ -491,7 +492,7 @@ export default function DetailsCardCom({ data, loading, path }) {
             </Grid>
           </Grid>
           {/* All uers comments section */}
-          <div className="userComments-Sec">
+          {/* <div className="userComments-Sec">
             <h2 className="headingTwo">{data?.comment?.length} Comments</h2>
 
             <Paper className="paper">
@@ -547,6 +548,13 @@ export default function DetailsCardCom({ data, loading, path }) {
                 </Grid>
               </Grid>
             </Paper>
+          </div> */}
+          <div className="userComments-Sec">
+            <h2 className="headingTwo">{data?.comment?.length} Comments</h2>
+            {Array.from(new Array(5)).map((item, index) => (
+              // here in item receives value form data var we passed
+              <CommentComponent />
+            ))}
           </div>
           <BasicModal
             open={modelOpen}
