@@ -4,7 +4,6 @@ import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import Skeleton from "@mui/material/Skeleton";
 import TextField from "@mui/material/TextField";
@@ -12,12 +11,13 @@ import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
+import Avatar from "@mui/material/Avatar";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
 import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
 import moment from "moment";
-import { getFirestore, updateDoc, doc } from "firebase/firestore";
+import { getFirestore, updateDoc, doc, onSnapshot } from "firebase/firestore";
 import ReactPlayer from "react-player";
 import { useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
@@ -35,6 +35,7 @@ function Media(props) {
   const navigate = useNavigate();
   const { loading, data, uid, likeHandler } = props;
   const isLiked = data?.like?.includes(uid);
+
   console.log("------isliked------->", isLiked);
   //   console.log("-----UserData----->>>>>>", data);
   //   console.log("-----uid----->>>>>>", uid);
@@ -232,6 +233,10 @@ export default function DetailsCardCom({ data, loading, path }) {
   const [uid, setUid] = useState(null);
   const [alreadyLogin, setAlreadyLogin] = useState(false);
   const [modelOpen, setModelOpen] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const [commentText, setCommentText] = useState("");
+  const [profileURL, setProfileURL] = useState("");
+  const [name, setName] = useState("");
   console.log("-------data-------", data);
 
   useEffect(() => {
@@ -240,6 +245,11 @@ export default function DetailsCardCom({ data, loading, path }) {
         console.log("----userData---", user.uid);
         setUid(user.uid);
         setAlreadyLogin(true);
+        const userData = onSnapshot(doc(db, "users", user.uid), (doc) => {
+          console.log("Current-- user--dk-- data: ", doc.data());
+          setName(doc.data().name);
+          setProfileURL(doc.data().profileURL);
+        });
       } else {
         setUid(null);
         setAlreadyLogin(false);
@@ -283,6 +293,15 @@ export default function DetailsCardCom({ data, loading, path }) {
       share: share,
     });
   };
+  // copy url
+  let copy = (textCopy) => {
+    const input = document.getElementById(textCopy);
+    input.select();
+    document.execCommand("copy");
+    setCopied(true);
+    setTimeout(() => setCopied(false), 4000); // reset after 2 seconds
+  };
+
   return (
     <div>
       <Box sx={{ flexGrow: 1 }}>
@@ -296,29 +315,18 @@ export default function DetailsCardCom({ data, loading, path }) {
           <Grid className="share-Handle-Sec" container>
             <Grid
               container
-              className="mainGrid"
+              className="buttonAndParag"
               size={{ xl: 12, lg: 12, md: 12, sm: 12, xs: 12 }}
             >
-              <Grid
-                className="emptyGrid"
-                size={{ xl: 5, lg: 5, md: 4, sm: 4, xs: 12 }}
-              >
-                {/* <Button>Share</Button> */}
-              </Grid>
-              <Grid
-                className="buttonAndParag"
-                size={{ xl: 2, lg: 2, md: 4, sm: 4, xs: 12 }}
-              >
-                <ShareOutlinedIcon className="share-icon" />
-                <h5 className="share-text">Share this content</h5>
-              </Grid>
-              <Grid
-                className="emptyGrid"
-                size={{ xl: 5, lg: 5, md: 4, sm: 4, xs: 12 }}
-              >
-                {/* <Button>Share</Button> */}
-              </Grid>
+              <h2 className="share-text">
+                <ShareOutlinedIcon
+                  sx={{ height: "40px", width: "40px" }}
+                  className="share-icon"
+                />
+                Share this content
+              </h2>
             </Grid>
+
             <Grid
               container
               className="btn-Grid"
@@ -361,25 +369,84 @@ export default function DetailsCardCom({ data, loading, path }) {
               className="copyURL"
               size={{ xl: 12, lg: 12, md: 12, sm: 12, xs: 12 }}
             >
-              {/* <b style={{ textAlign: "center" }}>Copy URL : #</b> */}
               <Grid
                 className="TextField"
                 size={{ xl: 10, lg: 10, md: 9, sm: 8, xs: 12 }}
               >
                 <TextField
-                  id="outlined-basic"
+                  id="textCopy"
                   label="Copy URL"
                   variant="outlined"
                   className="textURL"
-                  // value={}
+                  value={`fadsfds/${path}`}
                 />
               </Grid>
               <Grid
                 className="textURLBtn"
                 size={{ xl: 2, lg: 2, md: 3, sm: 4, xs: 12 }}
               >
-                <Button variant="contained" onclick="copy('outlined-basic')">
-                  Copy URL
+                <Button variant="contained" onClick={() => copy("textCopy")}>
+                  {copied ? "Copied" : "Copy"}
+                </Button>
+              </Grid>
+            </Grid>
+          </Grid>
+          {/* comment section starts */}
+          <Grid className="share-Handle-Sec" container>
+            <Grid container size={{ xl: 12, lg: 12, md: 12, sm: 12, xs: 12 }}>
+              <Grid
+                className="emptyGrid"
+                size={{ xl: 5, lg: 5, md: 4, sm: 4, xs: 12 }}
+              >
+                {/* <Button>Share</Button> */}
+              </Grid>
+              <Grid
+                className="buttonAndParag"
+                size={{ xl: 2, lg: 2, md: 4, sm: 4, xs: 12 }}
+              >
+                <h2>{data?.comment?.length} Comments</h2>
+              </Grid>
+              <Grid
+                className="emptyGrid"
+                size={{ xl: 5, lg: 5, md: 4, sm: 4, xs: 12 }}
+              ></Grid>
+            </Grid>
+
+            <Grid container size={{ xl: 12, lg: 12, md: 12, sm: 12, xs: 12 }}>
+              <Grid
+                className="Avatar"
+                size={{ xl: 2, lg: 2, md: 3, sm: 3, xs: 12 }}
+              >
+                {alreadyLogin && (
+                  <Avatar
+                  className="avatarSelf"
+                    alt={name}
+                    src={profileURL}
+                    style={{ width: 80, height: 80 }}
+                  />
+                )}
+              </Grid>
+              <Grid
+                className="TextField"
+                size={{ xl: 8, lg: 8, md: 6, sm: 6, xs: 12 }}
+              >
+                <TextField
+                  id="outlined-textarea"
+                  label="Add a comment ..."
+                  placeholder="Add a comment ..."
+                  multiline
+                  style={{ width: "100%" }}
+                  rows={7}
+                  value={commentText}
+                  onChange={(e) => setCommentText(e.target.value)}
+                />
+              </Grid>
+              <Grid
+                className="textURLBtn"
+                size={{ xl: 2, lg: 2, md: 3, sm: 3, xs: 12 }}
+              >
+                <Button variant="contained" disabled={!commentText.trim()}>
+                  Comment
                 </Button>
               </Grid>
             </Grid>

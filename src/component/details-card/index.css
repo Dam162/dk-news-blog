@@ -70,15 +70,18 @@
     display: none;
   }
 }
+.share-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .share-Handle-Sec {
   /* background-color: #555; */
   width: 100%;
   border-radius: 6px;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
   padding: 10px 0px;
-}
-.emptyGrid {
-  /* background-color: aqua; */
 }
 .buttonAndParag {
   display: flex;
@@ -87,16 +90,10 @@
   padding: 10px 5px;
 }
 .share-icon {
-  /* background-color: antiquewhite; */
+  margin-right: 10px;
 }
-.mainGrid {
-  /* background-color: aqua; */
-}
-.btn-Grid {
-  /* background-color: bisque; */
-}
+
 .allSocialButtons {
-  /* background-color: cadetblue; */
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -120,10 +117,7 @@
   justify-content: space-around;
   align-items: center;
 }
-.TextField {
-  /* background-color: rgb(23, 145, 90); */
-  /* height: 50px; */
-}
+
 .textURLBtn {
   /* background-color: antiquewhite; */
   display: flex;
@@ -132,5 +126,14 @@
 }
 .textURL {
   width: 100% !important;
- 
+}
+.Avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  /* border: 1px solid; */
+}
+.avatarSelf {
+  border: 2px solid rgb(11, 11, 192);
 }
