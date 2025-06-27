@@ -8,6 +8,10 @@ import Typography from "@mui/material/Typography";
 import Skeleton from "@mui/material/Skeleton";
 import TextField from "@mui/material/TextField";
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
+import CircularProgress from "@mui/material/CircularProgress";
+// import { Divider, Avatar, Grid, Paper } from "@material-ui/core";
+import Divider from "@mui/material/Divider";
+import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
@@ -30,6 +34,8 @@ import {
 } from "react-share";
 import { FacebookIcon, TwitterIcon, WhatsappIcon } from "react-share";
 const language = "en";
+const imgLink =
+  "https://images.pexels.com/photos/1681010/pexels-photo-1681010.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260";
 
 function Media(props) {
   const navigate = useNavigate();
@@ -212,7 +218,7 @@ function Media(props) {
               <SendOutlinedIcon className="icon" />
               <p className="paragraphTag">
                 {Intl.NumberFormat(language, { notation: "compact" }).format(
-                  data?.share
+                  data?.share.length
                 )}
               </p>
             </div>
@@ -235,9 +241,12 @@ export default function DetailsCardCom({ data, loading, path }) {
   const [modelOpen, setModelOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const [commentText, setCommentText] = useState("");
-  const [profileURL, setProfileURL] = useState("");
-  const [name, setName] = useState("");
-  console.log("-------data-------", data);
+  // const [profileURL, setProfileURL] = useState("");
+  // const [name, setName] = useState("");
+  const [commentLoading, setCommentLoading] = useState(false);
+  const [userData, setUserData] = useState([]);
+
+  // console.log("-------data-------", data);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -247,8 +256,11 @@ export default function DetailsCardCom({ data, loading, path }) {
         setAlreadyLogin(true);
         const userData = onSnapshot(doc(db, "users", user.uid), (doc) => {
           console.log("Current-- user--dk-- data: ", doc.data());
-          setName(doc.data().name);
-          setProfileURL(doc.data().profileURL);
+          const user = doc?.data();
+          setUserData(user);
+          // console.log("---DK--User--->>", user);
+          // setName(doc.data().name);
+          // setProfileURL(doc.data().profileURL);
         });
       } else {
         setUid(null);
@@ -256,7 +268,7 @@ export default function DetailsCardCom({ data, loading, path }) {
       }
     });
   }, []);
-
+  console.log("---userData--->>", userData);
   //   likehander
   const likeHandler = async () => {
     if (alreadyLogin) {
@@ -300,6 +312,22 @@ export default function DetailsCardCom({ data, loading, path }) {
     document.execCommand("copy");
     setCopied(true);
     setTimeout(() => setCopied(false), 4000); // reset after 2 seconds
+  };
+
+  //commentHandler
+  const commentHandler = async () => {
+    if (alreadyLogin) {
+      // const userComment = data?.comment;
+      // userComment.push(commentText);
+    } else {
+      setModelOpen(true);
+    }
+    // const blogRef = doc(db, "dk-blogs", data?.blogID);
+    // await updateDoc(blogRef, {
+    //   comment: commentText,
+    // });
+    // alert("commetText", commentText);
+    setCommentText("");
   };
 
   return (
@@ -404,7 +432,7 @@ export default function DetailsCardCom({ data, loading, path }) {
                 className="buttonAndParag"
                 size={{ xl: 2, lg: 2, md: 4, sm: 4, xs: 12 }}
               >
-                <h2>{data?.comment?.length} Comments</h2>
+                <h2>Add Comment</h2>
               </Grid>
               <Grid
                 className="emptyGrid"
@@ -412,19 +440,22 @@ export default function DetailsCardCom({ data, loading, path }) {
               ></Grid>
             </Grid>
 
-            <Grid container size={{ xl: 12, lg: 12, md: 12, sm: 12, xs: 12 }}>
+            <Grid
+              className="commentTextSec"
+              // style={{ border: "1px solid gray"  }}
+              container
+              size={{ xl: 12, lg: 12, md: 12, sm: 12, xs: 12 }}
+            >
               <Grid
                 className="Avatar"
                 size={{ xl: 2, lg: 2, md: 3, sm: 3, xs: 12 }}
               >
-                {alreadyLogin && (
-                  <Avatar
-                    className="avatarSelf"
-                    alt={name}
-                    src={profileURL}
-                    style={{ width: 80, height: 80 }}
-                  />
-                )}
+                <Avatar
+                  className="avatarSelf"
+                  alt={alreadyLogin ? userData?.name : "Guest"}
+                  src={alreadyLogin ? userData?.profileURL : "#"}
+                  style={{ width: 60, height: 60 }}
+                />
               </Grid>
               <Grid
                 className="TextField"
@@ -436,7 +467,7 @@ export default function DetailsCardCom({ data, loading, path }) {
                   placeholder="Add a comment ..."
                   multiline
                   style={{ width: "100%" }}
-                  rows={7}
+                  rows={3}
                   value={commentText}
                   onChange={(e) => setCommentText(e.target.value)}
                 />
@@ -445,12 +476,78 @@ export default function DetailsCardCom({ data, loading, path }) {
                 className="textURLBtn"
                 size={{ xl: 2, lg: 2, md: 3, sm: 3, xs: 12 }}
               >
-                <Button variant="contained" disabled={!commentText.trim()}>
-                  Comment
+                <Button
+                  onClick={commentHandler}
+                  variant="contained"
+                  disabled={commentText === ""}
+                >
+                  {commentLoading ? (
+                    <CircularProgress style={{ color: "white" }} size={20} />
+                  ) : (
+                    "Comment"
+                  )}
                 </Button>
               </Grid>
             </Grid>
           </Grid>
+          {/* All uers comments section */}
+          <div className="userComments-Sec">
+            <h2 className="headingTwo">{data?.comment?.length} Comments</h2>
+
+            <Paper className="paper">
+              <Grid
+                className="mainGridComp"
+                container
+                // wrap="nowrap"
+                spacing={2}
+                size={{ xl: 12, lg: 12, md: 12, sm: 12, xs: 12 }}
+              >
+                <Grid
+                  className="avatarGrid"
+                  item
+                  size={{ xl: 1, lg: 1, md: 1, sm: 12, xs: 12 }}
+                >
+                  <Avatar
+                    alt="Remy Sharp"
+                    src={imgLink}
+                    sx={{ width: "60px", height: "60px" }}
+                  />
+                </Grid>
+                <Grid
+                  size={{ xl: 11, lg: 11, md: 11, sm: 12, xs: 12 }}
+                  className="insideGrid"
+                  justifyContent="left"
+                  item
+                  xs
+                  zeroMinWidth
+                >
+                  <h4
+                    className="headingFour"
+                    // style={{ margin: 0, textAlign: "left" }}
+                  >
+                    Michel Michel
+                  </h4>
+                  <p style={{ textAlign: "left", textAlign: "justify" }}>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Aenean luctus ut est sed faucibus. Duis bibendum ac ex
+                    vehicula laoreet. Suspendisse congue vulputate lobortis.
+                    Pellentesque at interdum tortor. Quisque arcu quam,
+                    malesuada vel mauris et, posuere sagittis ipsum. Aliquam
+                    ultricies a ligula nec faucibus. In elit metus, efficitur
+                    lobortis nisi quis, molestie porttitor metus. Pellentesque
+                    et neque risus. Aliquam vulputate, mauris vitae tincidunt
+                    interdum, mauris mi vehicula urna, nec feugiat quam lectus
+                    vitae ex.{" "}
+                  </p>
+                  <p
+                    className="dateParagraph"
+                  >
+                    posted 1 minute ago
+                  </p>
+                </Grid>
+              </Grid>
+            </Paper>
+          </div>
           <BasicModal
             open={modelOpen}
             handleClose={() => setModelOpen(false)}

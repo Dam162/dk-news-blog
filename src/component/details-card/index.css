@@ -65,11 +65,23 @@
   margin-left: 8px;
 }
 
-@media screen and (max-width: 599px) {
+@media screen and (max-width: 600px) {
   .emptyGrid {
     display: none;
   }
 }
+@media screen and (max-width: 900px) {
+  .avatarGrid {
+    justify-content: center !important;
+  }
+  .headingFour {
+    text-align: center !important;
+  }
+  .dateParagraph {
+    text-align: center !important;
+  }
+}
+
 .share-text {
   display: flex;
   justify-content: center;
@@ -81,6 +93,12 @@
   border-radius: 6px;
   box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
     rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+  padding: 10px;
+}
+.commentTextSec {
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+  border-radius: 6px;
   padding: 10px 0px;
 }
 .buttonAndParag {
@@ -135,5 +153,42 @@
   /* border: 1px solid; */
 }
 .avatarSelf {
-  border: 2px solid rgb(11, 11, 192);
+  /* border: 2px solid rgb(11, 11, 192); */
+}
+.userComments-Sec {
+  /* border: 2px solid green; */
+  padding: 10px;
+  border-radius: 6px;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+.headingTwo {
+  margin: 5px 0px;
+}
+.paper {
+  padding: 20px;
+  /* background-color: rgb(233, 232, 231) !important; */
+  margin-top: 10px;
+}
+.mainGridComp {
+  /* background-color: aquamarine; */
+}
+.insideGrid {
+  /* background-color: burlywood; */
+}
+.avatarGrid {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  /* background-color: aqua; */
+}
+.headingFour {
+  margin: 0;
+  text-align: left;
+}
+.dateParagraph {
+  text-align: left;
+  color: gray;
+  margin: 0;
+  padding: 0;
 }

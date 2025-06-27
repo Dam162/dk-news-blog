@@ -171,9 +171,11 @@ function Media(props) {
           ) : (
             <div className="footer-box" id="comntSec">
               <ChatBubbleOutlineOutlinedIcon className="icon" />
-              <p className="paragraphTag" id="comntParag">{Intl.NumberFormat(language, { notation: "compact" }).format(
+              <p className="paragraphTag" id="comntParag">
+                {Intl.NumberFormat(language, { notation: "compact" }).format(
                   data?.comment?.length
-                )}</p>
+                )}
+              </p>
             </div>
           )}
         </CardContent>
@@ -191,9 +193,11 @@ function Media(props) {
           ) : (
             <div className="footer-box" id="footerBox">
               <SendOutlinedIcon className="icon" />
-              <p className="paragraphTag">{Intl.NumberFormat(language, { notation: "compact" }).format(
-                  data?.share
-                )}</p>
+              <p className="paragraphTag">
+                {Intl.NumberFormat(language, { notation: "compact" }).format(
+                  data?.share.length
+                )}
+              </p>
             </div>
           )}
         </CardContent>
