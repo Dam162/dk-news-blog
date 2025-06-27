@@ -288,7 +288,7 @@ export default function DetailsCardCom({ data, loading, path }) {
   const shareHandler = async () => {
     let share = data?.share;
     share += 1;
-    const blogRef = doc(db, "blogs", data?.blogID);
+    const blogRef = doc(db, "dk-blogs", data?.blogID);
     await updateDoc(blogRef, {
       share: share,
     });
@@ -419,7 +419,7 @@ export default function DetailsCardCom({ data, loading, path }) {
               >
                 {alreadyLogin && (
                   <Avatar
-                  className="avatarSelf"
+                    className="avatarSelf"
                     alt={name}
                     src={profileURL}
                     style={{ width: 80, height: 80 }}
