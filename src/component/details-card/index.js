@@ -379,6 +379,7 @@ export default function DetailsCardCom({ data, loading, path }) {
                   variant="outlined"
                   className="textURL"
                   value={`https://dk-news-blog.vercel.app/blog-details/${path}`}
+                  disabled
                 />
               </Grid>
               <Grid
