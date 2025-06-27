@@ -342,19 +342,19 @@ export default function DetailsCardCom({ data, loading, path }) {
               >
                 <FacebookShareButton
                   onClick={shareHandler}
-                  url={`fadsfds/${path}`}
+                  url={`https://dk-news-blog.vercel.app/blog-details/${path}`}
                 >
                   <FacebookIcon size={40} round={true} />
                 </FacebookShareButton>
                 <TwitterShareButton
                   onClick={shareHandler}
-                  url={`fadsfds/${path}`}
+                  url={`https://dk-news-blog.vercel.app/blog-details/${path}`}
                 >
                   <TwitterIcon size={40} round={true} />
                 </TwitterShareButton>
                 <WhatsappShareButton
                   onClick={shareHandler}
-                  url={`fadsfds/${path}`}
+                  url={`https://dk-news-blog.vercel.app/blog-details/${path}`}
                 >
                   <WhatsappIcon size={40} round={true} />
                 </WhatsappShareButton>
@@ -378,7 +378,7 @@ export default function DetailsCardCom({ data, loading, path }) {
                   label="Copy URL"
                   variant="outlined"
                   className="textURL"
-                  value={`fadsfds/${path}`}
+                  value={`https://dk-news-blog.vercel.app/blog-details/${path}`}
                 />
               </Grid>
               <Grid
