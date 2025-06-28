@@ -48,6 +48,7 @@ const Home = () => {
     <div>
       <NavBar activePage="Home" />
       <h1>hghghgh</h1>
+      <h1>hghghgh</h1>
       <Box
         component="form"
         sx={{ "& > :not(style)": { width: "100%" } }}
