@@ -47,6 +47,7 @@ const Home = () => {
   return (
     <div>
       <NavBar activePage="Home" />
+      <h1>hghghghgh</h1>
       <Box
         component="form"
         sx={{ "& > :not(style)": { width: "100%" } }}
