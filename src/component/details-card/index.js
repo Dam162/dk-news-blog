@@ -22,7 +22,7 @@ import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
 import moment from "moment";
 import { getFirestore, updateDoc, doc, onSnapshot } from "firebase/firestore";
 import ReactPlayer from "react-player";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import "./index.css";
 import BasicModal from "../basic-model";
@@ -33,11 +33,9 @@ import {
 } from "react-share";
 import { FacebookIcon, TwitterIcon, WhatsappIcon } from "react-share";
 const language = "en";
-const imgLink =
-  "https://images.pexels.com/photos/1681010/pexels-photo-1681010.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260";
 
 function Media(props) {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { loading, data, uid, likeHandler } = props;
   const isLiked = data?.like?.includes(uid);
 
@@ -253,7 +251,7 @@ export default function DetailsCardCom({ data, loading, path }) {
         console.log("----userData---", user.uid);
         setUid(user.uid);
         setAlreadyLogin(true);
-        const userData = onSnapshot(doc(db, "users", user.uid), (doc) => {
+        const userResData = onSnapshot(doc(db, "users", user.uid), (doc) => {
           console.log("Current-- user--dk-- data: ", doc.data());
           const user = doc?.data();
           setUserData(user);
@@ -261,6 +259,7 @@ export default function DetailsCardCom({ data, loading, path }) {
           // setName(doc.data().name);
           // setProfileURL(doc.data().profileURL);
         });
+        console.log("userResData", userResData);
       } else {
         setUid(null);
         setAlreadyLogin(false);
