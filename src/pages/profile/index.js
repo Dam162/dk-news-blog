@@ -19,12 +19,7 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import { useNavigate } from "react-router-dom";
-
-import { styled } from "@mui/material/styles";
-// import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
-
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -43,7 +38,7 @@ const Profile = () => {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        const uid = user.uid;
+        // const uid = user.uid;
         console.log("User------", user.email);
         if (user.emailVerified) {
           const userData = onSnapshot(doc(db, "users", user.uid), (userRes) => {
@@ -54,6 +49,7 @@ const Profile = () => {
             setProfileURL(userRes.data().profileURL);
             setUid(user.uid);
           });
+          console.log("userData", userData);
         } else {
           navigate("/email-verification");
         }

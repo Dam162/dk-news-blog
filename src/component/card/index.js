@@ -12,7 +12,6 @@ import Box from "@mui/material/Box";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
-// import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
 import moment from "moment";
 import ReactPlayer from "react-player";

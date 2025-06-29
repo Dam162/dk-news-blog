@@ -11,8 +11,6 @@ import TextField from "@mui/material/TextField";
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import CircularProgress from "@mui/material/CircularProgress";
 // import { Divider, Avatar, Grid, Paper } from "@material-ui/core";
-import Divider from "@mui/material/Divider";
-import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";

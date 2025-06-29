@@ -43,7 +43,7 @@ const CommentComponent = () => {
             >
               Michel Michel
             </h4>
-            <p style={{ textAlign: "left", textAlign: "justify" }}>
+            <p style={{ textAlign: "justify" }}>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
               luctus ut est sed faucibus. Duis bibendum ac ex vehicula laoreet.
               Suspendisse congue vulputate lobortis. Pellentesque at interdum

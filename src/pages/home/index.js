@@ -37,18 +37,18 @@ const Home = () => {
 
       fetchData();
     });
+    console.log("unsubscribe", unsubscribe);
   }, []);
-
   const filteredData = blogs
-    .filter((item) => item.blogTitle.toLowerCase().includes(search.toLowerCase()))
+    .filter((item) =>
+      item.blogTitle.toLowerCase().includes(search.toLowerCase())
+    )
     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)); //
   console.log(filteredData);
 
   return (
     <div>
       <NavBar activePage="Home" />
-      <h1>hghghgh</h1>
-      <h1>hghghgh</h1>
       <Box
         component="form"
         sx={{ "& > :not(style)": { width: "100%" } }}
