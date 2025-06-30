@@ -10,7 +10,6 @@ import Skeleton from "@mui/material/Skeleton";
 import TextField from "@mui/material/TextField";
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import CircularProgress from "@mui/material/CircularProgress";
-// import { Divider, Avatar, Grid, Paper } from "@material-ui/core";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
@@ -22,7 +21,6 @@ import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
 import { getFirestore, updateDoc, doc, onSnapshot } from "firebase/firestore";
 import ReactPlayer from "react-player";
 import moment from "moment";
-// import { useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import "./index.css";
 import BasicModal from "../basic-model";
@@ -35,13 +33,10 @@ import { FacebookIcon, TwitterIcon, WhatsappIcon } from "react-share";
 const language = "en";
 
 function Media(props) {
-  // const navigate = useNavigate();
   const { loading, data, uid, likeHandler } = props;
   const isLiked = data?.like?.includes(uid);
 
   console.log("------isliked------->", isLiked);
-  //   console.log("-----UserData----->>>>>>", data);
-  //   console.log("-----uid----->>>>>>", uid);
   return (
     <Card style={{ width: "100%" }}>
       <CardHeader
@@ -84,7 +79,6 @@ function Media(props) {
         <div className="media">
           {data?.fileType === "image" ? (
             <CardMedia
-              // style={{ borderRadius: "10px" }}
               component="img"
               width={"100%"}
               height={"100%"}
@@ -92,7 +86,6 @@ function Media(props) {
             />
           ) : (
             <ReactPlayer
-              // style={{ borderRadius: "10px" }}
               width={"100%"}
               height={"100%"}
               controls={true}
@@ -116,7 +109,6 @@ function Media(props) {
             variant="body2"
             component="p"
             className="title"
-            // sx={{ color: "text.secondary" }}
           >
             {data?.blogTitle}
           </Typography>
@@ -128,7 +120,6 @@ function Media(props) {
             <Skeleton
               animation="wave"
               height={10}
-              // style={{ marginBottom: 6 }}
             />
             <Skeleton animation="wave" height={10} width="80%" />
           </React.Fragment>
@@ -239,12 +230,9 @@ export default function DetailsCardCom({ data, loading, path }) {
   const [copied, setCopied] = useState(false);
   const [commentText, setCommentText] = useState("");
   const [commentRes, setCommentRes] = useState(false);
-  // const [profileURL, setProfileURL] = useState("");
-  // const [name, setName] = useState("");
   const [commentLoading, setCommentLoading] = useState(false);
   const [userData, setUserData] = useState({});
 
-  // console.log("-------data-------", data);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -256,11 +244,7 @@ export default function DetailsCardCom({ data, loading, path }) {
           console.log("Current-- user--dk-- data: ", doc.data());
           const user = doc?.data();
           setUserData({ ...user });
-          // console.log("---DK--User--->>", user);
-          // setName(doc.data().name);
-          // setProfileURL(doc.data().profileURL);
         });
-        // console.log("userResData", userResData);
       } else {
         setUid(null);
         setAlreadyLogin(false);
@@ -268,7 +252,6 @@ export default function DetailsCardCom({ data, loading, path }) {
       }
     });
   }, []);
-  // console.log("---userData--->>", userData);
   //   likehander
   const likeHandler = async () => {
     if (alreadyLogin) {
@@ -311,7 +294,7 @@ export default function DetailsCardCom({ data, loading, path }) {
     input.select();
     document.execCommand("copy");
     setCopied(true);
-    setTimeout(() => setCopied(false), 4000); // reset after 2 seconds
+    setTimeout(() => setCopied(false), 4000); // reset after 4 seconds
   };
 
   //commentHandler
@@ -338,7 +321,6 @@ export default function DetailsCardCom({ data, loading, path }) {
           setCommentText("");
           setCommentRes(false);
         });
-      // alert("commetText", commentText);
     } else {
       setModelOpen(true);
     }
@@ -433,14 +415,12 @@ export default function DetailsCardCom({ data, loading, path }) {
               </Grid>
             </Grid>
           </Grid>
-          {/* comment section starts */}
           <Grid className="share-Handle-Sec" container>
             <Grid container size={{ xl: 12, lg: 12, md: 12, sm: 12, xs: 12 }}>
               <Grid
                 className="emptyGrid"
                 size={{ xl: 5, lg: 5, md: 4, sm: 4, xs: 12 }}
               >
-                {/* <Button>Share</Button> */}
               </Grid>
               <Grid
                 className="buttonAndParag"
@@ -456,7 +436,6 @@ export default function DetailsCardCom({ data, loading, path }) {
 
             <Grid
               className="commentTextSec"
-              // style={{ border: "1px solid gray"  }}
               container
               size={{ xl: 12, lg: 12, md: 12, sm: 12, xs: 12 }}
             >
@@ -504,72 +483,11 @@ export default function DetailsCardCom({ data, loading, path }) {
               </Grid>
             </Grid>
           </Grid>
-          {/* All uers comments section */}
-          {/* <div className="userComments-Sec">
-            <h2 className="headingTwo">{data?.comment?.length} Comments</h2>
-
-            <Paper className="paper">
-              <Grid
-                className="mainGridComp"
-                container
-                // wrap="nowrap"
-                spacing={2}
-                size={{ xl: 12, lg: 12, md: 12, sm: 12, xs: 12 }}
-              >
-                <Grid
-                  className="avatarGrid"
-                  item
-                  size={{ xl: 1, lg: 1, md: 1, sm: 12, xs: 12 }}
-                >
-                  <Avatar
-                    alt="Remy Sharp"
-                    src={imgLink}
-                    sx={{ width: "60px", height: "60px" }}
-                  />
-                </Grid>
-                <Grid
-                  size={{ xl: 11, lg: 11, md: 11, sm: 12, xs: 12 }}
-                  className="insideGrid"
-                  justifyContent="left"
-                  item
-                  xs
-                  zeroMinWidth
-                >
-                  <h4
-                    className="headingFour"
-                    // style={{ margin: 0, textAlign: "left" }}
-                  >
-                    Michel Michel
-                  </h4>
-                  <p style={{ textAlign: "left", textAlign: "justify" }}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Aenean luctus ut est sed faucibus. Duis bibendum ac ex
-                    vehicula laoreet. Suspendisse congue vulputate lobortis.
-                    Pellentesque at interdum tortor. Quisque arcu quam,
-                    malesuada vel mauris et, posuere sagittis ipsum. Aliquam
-                    ultricies a ligula nec faucibus. In elit metus, efficitur
-                    lobortis nisi quis, molestie porttitor metus. Pellentesque
-                    et neque risus. Aliquam vulputate, mauris vitae tincidunt
-                    interdum, mauris mi vehicula urna, nec feugiat quam lectus
-                    vitae ex.{" "}
-                  </p>
-                  <p
-                    className="dateParagraph"
-                  >
-                    posted 1 minute ago
-                  </p>
-                </Grid>
-              </Grid>
-            </Paper>
-          </div> */}
           <div className="userComments-Sec">
             <h2 className="headingTwo">
               {(data?.comment?.length > 1 ) ? `${data?.comment?.length} Comments` : `${data?.comment?.length} Comment`}
             </h2>
-            {/* {Array.from(new Array(5)).map((item, index) => ( */}
-            {/* // here in item receives value form data var we passed */}
             <CommentComponent data={data?.comment} />
-            {/* // ))} */}
           </div>
           <BasicModal
             open={modelOpen}

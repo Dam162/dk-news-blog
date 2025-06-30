@@ -5,15 +5,9 @@
 
 .paper {
   padding: 20px;
-  /* background-color: rgb(233, 232, 231) !important; */
   margin-top: 10px;
 }
-.mainGridComp {
-  /* background-color: aquamarine; */
-}
-.insideGrid {
-  /* background-color: burlywood; */
-}
+
 .avatarGrid {
   display: flex;
   justify-content: flex-start;

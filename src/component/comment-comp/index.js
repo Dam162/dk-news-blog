@@ -5,8 +5,6 @@ import Grid from "@mui/material/Grid";
 import moment from "moment";
 import Avatar from "@mui/material/Avatar";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
-// const imgLink =
-//   "https://images.pexels.com/photos/1681010/pexels-photo-1681010.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260";
 const CommentComponent = ({ data }) => {
   const [comments, setComments] = useState([]);
   const db = getFirestore();
@@ -35,16 +33,13 @@ const CommentComponent = ({ data }) => {
   console.log("sort Comments", sortComments);
   return (
     <div style={{ width: "100%" }}>
-      {/* <h2 className="headingTwo"> Comments</h2> */}
       {sortComments?.map((item, index) => {
         console.log("item", item);
         return (
-          // <div  width="100%">
           <Paper key={index} className="paper">
             <Grid
               className="mainGridComp"
               container
-              // wrap="nowrap"
               spacing={2}
               size={{ xl: 12, lg: 12, md: 12, sm: 12, xs: 12 }}
             >
@@ -69,7 +64,6 @@ const CommentComponent = ({ data }) => {
               >
                 <h4
                   className="headingFour"
-                  // style={{ margin: 0, textAlign: "left" }}
                 >
                   {item?.name}
                 </h4>
@@ -83,7 +77,6 @@ const CommentComponent = ({ data }) => {
               </Grid>
             </Grid>
           </Paper>
-          // </div>
         );
       })}
     </div>
