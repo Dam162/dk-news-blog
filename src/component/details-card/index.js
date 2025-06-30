@@ -563,7 +563,9 @@ export default function DetailsCardCom({ data, loading, path }) {
             </Paper>
           </div> */}
           <div className="userComments-Sec">
-            <h2 className="headingTwo">{data?.comment?.length} Comments</h2>
+            <h2 className="headingTwo">
+              {(data?.comment?.length > 1 ) ? `${data?.comment?.length} Comments` : `${data?.comment?.length} Comment`}
+            </h2>
             {/* {Array.from(new Array(5)).map((item, index) => ( */}
             {/* // here in item receives value form data var we passed */}
             <CommentComponent data={data?.comment} />
