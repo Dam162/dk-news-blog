@@ -60,7 +60,45 @@
 .card {
   cursor: pointer;
 }
+.card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Media wrapper */
 .mediaImgVideo {
-  /* background-color: aqua !important;  */
-  height: 200px;
+  width: 100%;
+  height: 200px; /* Fixed height for uniformity */
+  overflow: hidden;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Images inside media */
+.mediaImgVideo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Videos inside media */
+.mediaImgVideo video,
+.mediaImgVideo iframe {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Optional: if you're using ReactPlayer */
+.mediaImgVideo > div {
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 8px;
+  overflow: hidden;
 }

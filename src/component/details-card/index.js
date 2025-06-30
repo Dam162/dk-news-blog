@@ -19,9 +19,9 @@ import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
 import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
-import moment from "moment";
 import { getFirestore, updateDoc, doc, onSnapshot } from "firebase/firestore";
 import ReactPlayer from "react-player";
+import moment from "moment";
 // import { useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import "./index.css";
@@ -81,7 +81,7 @@ function Media(props) {
       {loading ? (
         <Skeleton sx={{ height: 400 }} animation="wave" variant="rectangular" />
       ) : (
-        <div style={{ padding: "0px 10px" }} className="media">
+        <div className="media">
           {data?.fileType === "image" ? (
             <CardMedia
               // style={{ borderRadius: "10px" }}
@@ -238,10 +238,11 @@ export default function DetailsCardCom({ data, loading, path }) {
   const [modelOpen, setModelOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const [commentText, setCommentText] = useState("");
+  const [commentRes, setCommentRes] = useState(false);
   // const [profileURL, setProfileURL] = useState("");
   // const [name, setName] = useState("");
   const [commentLoading, setCommentLoading] = useState(false);
-  const [userData, setUserData] = useState([]);
+  const [userData, setUserData] = useState({});
 
   // console.log("-------data-------", data);
 
@@ -254,19 +255,20 @@ export default function DetailsCardCom({ data, loading, path }) {
         const userResData = onSnapshot(doc(db, "users", user.uid), (doc) => {
           console.log("Current-- user--dk-- data: ", doc.data());
           const user = doc?.data();
-          setUserData(user);
+          setUserData({ ...user });
           // console.log("---DK--User--->>", user);
           // setName(doc.data().name);
           // setProfileURL(doc.data().profileURL);
         });
-        console.log("userResData", userResData);
+        // console.log("userResData", userResData);
       } else {
         setUid(null);
         setAlreadyLogin(false);
+        setUserData({});
       }
     });
   }, []);
-  console.log("---userData--->>", userData);
+  // console.log("---userData--->>", userData);
   //   likehander
   const likeHandler = async () => {
     if (alreadyLogin) {
@@ -314,18 +316,32 @@ export default function DetailsCardCom({ data, loading, path }) {
 
   //commentHandler
   const commentHandler = async () => {
+    console.log("data", data);
     if (alreadyLogin) {
-      // const userComment = data?.comment;
-      // userComment.push(commentText);
+      setCommentRes(true);
+      let userComment = Array.isArray(data?.comment) ? [...data.comment] : [];
+      userComment.push({
+        commentText: commentText,
+        createdAt: moment().format(),
+        uid: uid,
+      });
+      const blogRef = doc(db, "dk-blogs", data?.blogID);
+      await updateDoc(blogRef, {
+        comment: userComment,
+      })
+        .then(() => {
+          setCommentRes(false);
+          setCommentText("");
+          console.log("userComment", userComment);
+        })
+        .catch(() => {
+          setCommentText("");
+          setCommentRes(false);
+        });
+      // alert("commetText", commentText);
     } else {
       setModelOpen(true);
     }
-    // const blogRef = doc(db, "dk-blogs", data?.blogID);
-    // await updateDoc(blogRef, {
-    //   comment: commentText,
-    // });
-    // alert("commetText", commentText);
-    setCommentText("");
   };
 
   return (
@@ -477,7 +493,7 @@ export default function DetailsCardCom({ data, loading, path }) {
                 <Button
                   onClick={commentHandler}
                   variant="contained"
-                  disabled={commentText === ""}
+                  disabled={commentText === "" ? true : false}
                 >
                   {commentLoading ? (
                     <CircularProgress style={{ color: "white" }} size={20} />
@@ -548,10 +564,10 @@ export default function DetailsCardCom({ data, loading, path }) {
           </div> */}
           <div className="userComments-Sec">
             <h2 className="headingTwo">{data?.comment?.length} Comments</h2>
-            {Array.from(new Array(5)).map((item, index) => (
-              // here in item receives value form data var we passed
-              <CommentComponent />
-            ))}
+            {/* {Array.from(new Array(5)).map((item, index) => ( */}
+            {/* // here in item receives value form data var we passed */}
+            <CommentComponent data={data?.comment} />
+            {/* // ))} */}
           </div>
           <BasicModal
             open={modelOpen}

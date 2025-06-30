@@ -3,7 +3,6 @@
   padding: 0px;
 }
 
-
 .paper {
   padding: 20px;
   /* background-color: rgb(233, 232, 231) !important; */
@@ -39,6 +38,9 @@
     text-align: center !important;
   }
   .dateParagraph {
+    text-align: center !important;
+  }
+  .commentText {
     text-align: center !important;
   }
 }

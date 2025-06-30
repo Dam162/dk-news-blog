@@ -67,7 +67,7 @@ function Media(props) {
       {loading ? (
         <Skeleton sx={{ height: 200 }} animation="wave" variant="rectangular" />
       ) : (
-        <div style={{ padding: "0px 10px" }} className="mediaImgVideo">
+        <div className="mediaImgVideo">
           {data?.fileType === "image" ? (
             <CardMedia
               // style={{ borderRadius: "10px" }}
