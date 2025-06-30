@@ -12,36 +12,26 @@ const CommentComponent = ({ data }) => {
   const db = getFirestore();
 
   useEffect(() => {
-    let isMounted = true;
     const fetchData = async () => {
-      let commetsData = [];
+      let commentsData = [];
       for (let index in data) {
         const userRef = doc(db, "users", data[index].uid);
         const userSnap = await getDoc(userRef);
         if (userSnap.exists()) {
-          commetsData.push({
+          commentsData.push({
             ...data[index],
             ...userSnap.data(),
           });
         }
       }
-      if (isMounted) {
-        setComments(commetsData);
-      }
+      setComments(commentsData);
     };
-    if (data && data.length > 0) {
-      fetchData();
-    } else {
-      setComments([]);
-    }
-    return () => {
-      isMounted = false;
-    };
+    fetchData();
   }, [data, db]);
 
-  let sortComments = comments
-    ?.slice()
-    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  let sortComments = comments?.sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  );
   console.log("sort Comments", sortComments);
   return (
     <div style={{ width: "100%" }}>
@@ -65,7 +55,7 @@ const CommentComponent = ({ data }) => {
               >
                 <Avatar
                   alt={item?.name}
-                  src= {item?.profileURL}
+                  src={item?.profileURL}
                   sx={{ width: "60px", height: "60px" }}
                 />
               </Grid>
