@@ -8,6 +8,7 @@ import {
   CreateBlog,
   Details,
   Dashboard,
+  SlotsSignIn
 } from "../../pages";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -22,6 +23,7 @@ const RouterNav = () => {
           <Route path="/profile" element={<Profile />} />
           <Route path="/create-blog" element={<CreateBlog />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/sign-in" element={<SlotsSignIn />} />
           <Route path="/blog-details/:id" element={<Details />} />
           <Route path="/*" element={<PageNotFound />} />
         </Routes>
