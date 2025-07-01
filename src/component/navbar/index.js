@@ -19,7 +19,14 @@ import { doc, onSnapshot, getFirestore } from "firebase/firestore";
 
 function Navbar() {
   // const pages = ["Products", "Pricing", "Blog"];
-  const settings = ["Profile", "Dashboard", "Create Blog","SignIn", "Logout"];
+  const settings = [
+    "Profile",
+    "Dashboard",
+    "Create Blog",
+    "SignIn",
+    "SignUp",
+    "Logout",
+  ];
   const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -81,7 +88,9 @@ function Navbar() {
       navigate("/dashboard");
     } else if (setting === "SignIn") {
       navigate("/sign-in");
-    }else if (setting === "Create Blog") {
+    } else if (setting === "SignUp") {
+      navigate("/sign-up");
+    } else if (setting === "Create Blog") {
       console.log("Create Blog");
       navigate("/create-blog");
     }

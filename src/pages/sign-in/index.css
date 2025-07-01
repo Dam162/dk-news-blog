@@ -1,5 +1,5 @@
 /* index.css */
-.signIn-title{
+.signIn-title {
   color: #1976d2;
 }
 .signIn-box {
@@ -17,21 +17,21 @@
 
 .signIn-card {
   background: #fff;
-  padding: 30px;
+  padding: 15px 30px;
   border-radius: 12px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
 
 .signIn-title {
   text-align: center;
-  margin-bottom: 25px;
+  margin-bottom: 10px;
 }
 
 .social-login {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 .social-button {
@@ -83,7 +83,7 @@
 }
 
 .signIn-input {
-  margin-top: 15px;
+  /* margin-top: 15px; */
 }
 
 .forgot-pass {
@@ -102,4 +102,23 @@
 .login-button {
   margin-top: 10px;
   font-weight: 600;
+}
+.no-Account {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  background-color: rgb(243, 241, 241);
+  margin-top: 15px;
+  /* text-align: center; */
+  align-items: center;
+  padding: 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.no-Account > a {
+  color: #1976d2;
+  text-decoration: none;
+  margin-left: 5px;
+  padding: 0;
+  cursor: pointer;
 }

@@ -1,0 +1,93 @@
+/* index.css */
+.signUp-title {
+  color: #1976d2;
+}
+.signUp-box {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f3f4f6;
+  padding: 20px;
+}
+
+.signUp-container {
+  justify-content: center;
+}
+
+.signUp-card {
+  background: #fff;
+  padding: 15px 30px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.signUp-title {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.separator {
+  text-align: center;
+  margin: 20px 0;
+  position: relative;
+}
+
+.separator span {
+  background: #fff;
+  padding: 0 10px;
+  position: relative;
+  z-index: 2;
+}
+
+.separator::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  background-color: #ccc;
+  z-index: 1;
+}
+
+.signUp-input {
+  margin-top: 15px;
+}
+
+.forgot-pass {
+  display: block;
+  margin: 10px 0;
+  font-size: 13px;
+  text-align: right;
+  text-decoration: none;
+  color: #007bff;
+}
+
+.forgot-pass:hover {
+  text-decoration: underline;
+}
+
+.signUp-button {
+  margin-top: 10px;
+  font-weight: 600;
+}
+.no-Account {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  background-color: rgb(243, 241, 241);
+  margin-top: 15px;
+  /* text-align: center; */
+  align-items: center;
+  padding: 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.no-Account > a {
+  color: #1976d2;
+  text-decoration: none;
+  margin-left: 5px;
+  padding: 0;
+  cursor: pointer;
+}

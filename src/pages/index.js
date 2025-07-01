@@ -7,6 +7,7 @@ import CreateBlog from "./create-blog";
 import Details from "./details";
 import Dashboard from "./dashboard";
 import SlotsSignIn from "./sign-in";
+import SlotsSignUp from "./sign-up";
 
 export {
   Home,
@@ -17,5 +18,6 @@ export {
   CreateBlog,
   Details,
   Dashboard,
-  SlotsSignIn
+  SlotsSignIn,
+  SlotsSignUp,
 };
