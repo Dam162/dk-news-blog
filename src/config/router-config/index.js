@@ -1,7 +1,7 @@
 import React from "react";
 import {
   Home,
-  Login,
+  // Login,
   PageNotFound,
   EmailVerification,
   Profile,
@@ -19,7 +19,7 @@ const RouterNav = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/Login" element={<Login />} />
+          {/* <Route path="/Login" element={<Login />} /> */}
           <Route path="/email-verification" element={<EmailVerification />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/create-blog" element={<CreateBlog />} />

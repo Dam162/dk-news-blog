@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
-// import { Layout } from "./component";
 import reportWebVitals from "./reportWebVitals";
 import { ToastContainer } from "react-toastify";
 

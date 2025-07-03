@@ -50,7 +50,7 @@
   cursor: pointer;
 }
 .media {
-  padding: 0px 10px;
+  /* padding: 0px 10px; */
 }
 
 .media img,
@@ -59,7 +59,7 @@
   height: auto;
   max-height: 500px; /* optional: controls max height */
   object-fit: cover;
-  border-radius: 8px;
+  /* border-radius: 8px; */
 }
 
 .MuiCard-root {
@@ -156,4 +156,5 @@
 }
 .headingTwo {
   margin: 5px 0px;
+  text-align: center;
 }
