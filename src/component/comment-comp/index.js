@@ -5,12 +5,15 @@ import Grid from "@mui/material/Grid";
 import moment from "moment";
 import Avatar from "@mui/material/Avatar";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
+import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 
 const CommentComponent = ({ data }) => {
   const [comments, setComments] = useState([]);
+  const [replyComment, setReplyComment] = useState({});
+  const [loading, setLoading] = useState(false);
   const db = getFirestore();
 
   useEffect(() => {
@@ -30,6 +33,13 @@ const CommentComponent = ({ data }) => {
     };
     fetchData();
   }, [data, db]);
+
+  const handleReplyChange = (index, value) => {
+    setReplyComment((prev) => ({
+      ...prev,
+      [index]: value,
+    }));
+  };
 
   let sortComments = comments?.sort(
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
@@ -71,12 +81,11 @@ const CommentComponent = ({ data }) => {
                   {item?.commentText}
                 </p>
                 <p className="dateParagraph">
-                  {" "}
                   {moment(item?.createdAt).fromNow()}
                 </p>
 
                 {/* <Grid className="replyBox" container spacing={1}> */}
-                  
+
                 {/* </Grid> */}
 
                 <Box
@@ -86,30 +95,39 @@ const CommentComponent = ({ data }) => {
                   noValidate
                   autoComplete="off"
                 >
-                  <Grid className="replyTextGrid" size={{ xl: 11, lg: 11, md: 10, sm: 10, xs: 12 }}>
+                  <Grid
+                    className="replyTextGrid"
+                    size={{ xl: 11, lg: 11, md: 10, sm: 10, xs: 12 }}
+                  >
                     <TextField
                       className="replyTextField"
                       id="outlined-basic"
                       label="Reply"
                       variant="outlined"
                       size="small"
+                      value={replyComment[index] || ""}
+                      onChange={(e) => handleReplyChange(index, e.target.value)}
                     />
                   </Grid>
-                  <Grid className="replyGridButton" size={{ xl: 1, lg: 1, md: 2, sm: 2, xs: 12 }}>
-                    <Button className="replyButtonField" variant="contained">
-                      Reply
+                  <Grid
+                    className="replyGridButton"
+                    size={{ xl: 1, lg: 1, md: 2, sm: 2, xs: 12 }}
+                  >
+                    <Button
+                      className="replyButtonField"
+                      variant="contained"
+                      disabled={!replyComment[index]}
+                    >
+                      {loading ? (
+                        <CircularProgress
+                          style={{ color: "white" }}
+                          size={20}
+                        />
+                      ) : (
+                        "Reply"
+                      )}
                     </Button>
                   </Grid>
-                {/* <TextField
-                    className="replyTextField"
-                    id="outlined-basic"
-                    label="Reply"
-                    variant="outlined"
-                    size="small"
-                  />
-                  <Button className="replyButtonField" variant="contained">
-                    Reply
-                  </Button> */}
                 </Box>
               </Grid>
             </Grid>
