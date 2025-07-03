@@ -5,6 +5,10 @@ import Grid from "@mui/material/Grid";
 import moment from "moment";
 import Avatar from "@mui/material/Avatar";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+
 const CommentComponent = ({ data }) => {
   const [comments, setComments] = useState([]);
   const db = getFirestore();
@@ -62,11 +66,7 @@ const CommentComponent = ({ data }) => {
                 xs
                 zeroMinWidth
               >
-                <h4
-                  className="headingFour"
-                >
-                  {item?.name}
-                </h4>
+                <h4 className="headingFour">{item?.name}</h4>
                 <p className="commentText" style={{ textAlign: "justify" }}>
                   {item?.commentText}
                 </p>
@@ -74,6 +74,43 @@ const CommentComponent = ({ data }) => {
                   {" "}
                   {moment(item?.createdAt).fromNow()}
                 </p>
+
+                {/* <Grid className="replyBox" container spacing={1}> */}
+                  
+                {/* </Grid> */}
+
+                <Box
+                  className="replyBox"
+                  component="form"
+                  // sx={{ "& > :not(style)": {   width: "100%" } }}
+                  noValidate
+                  autoComplete="off"
+                >
+                  <Grid className="replyTextGrid" size={{ xl: 11, lg: 11, md: 10, sm: 10, xs: 12 }}>
+                    <TextField
+                      className="replyTextField"
+                      id="outlined-basic"
+                      label="Reply"
+                      variant="outlined"
+                      size="small"
+                    />
+                  </Grid>
+                  <Grid className="replyGridButton" size={{ xl: 1, lg: 1, md: 2, sm: 2, xs: 12 }}>
+                    <Button className="replyButtonField" variant="contained">
+                      Reply
+                    </Button>
+                  </Grid>
+                {/* <TextField
+                    className="replyTextField"
+                    id="outlined-basic"
+                    label="Reply"
+                    variant="outlined"
+                    size="small"
+                  />
+                  <Button className="replyButtonField" variant="contained">
+                    Reply
+                  </Button> */}
+                </Box>
               </Grid>
             </Grid>
           </Paper>
