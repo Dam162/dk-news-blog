@@ -28,7 +28,7 @@ function Media(props) {
   return (
     <Card
       className="card"
-      onClick={() => !loading && navigate(`blog-details/${data?.blogID}`)}
+      onClick={() => !loading && navigate(`/blog-details/${data?.blogID}`)}
     >
       <CardHeader
         avatar={

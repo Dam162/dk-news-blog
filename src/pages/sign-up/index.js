@@ -108,7 +108,7 @@ export default function SlotsSignUp() {
           </Button>
           <span className="no-Account">
             Already have account!{" "}
-            <a onClick={() => navigate("sign-in")}>Login</a>
+            <a onClick={() => navigate("/sign-in")}>Login</a>
           </span>
         </Grid>
       </Grid>
