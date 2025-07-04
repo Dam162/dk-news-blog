@@ -96,9 +96,8 @@ const Dashboard = () => {
           <h1 style={{ textAlign: "center" }}>Data Not Found!</h1>
         </Box>
       ) : (
-        <Card data={filteredData} loading={loading} />
+        <Card data={filteredData} loading={loading} edit={true} />
       )}
-      {/* <Card data={blogs} loading={loading} /> */}
     </div>
   );
 };

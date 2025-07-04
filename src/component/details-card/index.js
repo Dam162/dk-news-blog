@@ -6,7 +6,11 @@ import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 import Skeleton from "@mui/material/Skeleton";
+import { useNavigate, useLocation } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -24,6 +28,7 @@ import moment from "moment";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import "./index.css";
 import BasicModal from "../basic-model";
+import EditBlog from "../edit-blog-Details";
 import {
   FacebookShareButton,
   TwitterShareButton,
@@ -33,8 +38,11 @@ import { FacebookIcon, TwitterIcon, WhatsappIcon } from "react-share";
 const language = "en";
 
 function Media(props) {
-  const { loading, data, uid, likeHandler } = props;
+  const { loading, data, uid, likeHandler,edit} = props;
   const isLiked = data?.like?.includes(uid);
+  const routerLocation = useLocation();
+  const [open, setOpen] = useState(false);
+  console.log("-------routerLocation--------", routerLocation);
 
   console.log("------isliked------->", isLiked);
   return (
@@ -72,6 +80,27 @@ function Media(props) {
             moment(data?.createdAt).fromNow()
           )
         }
+        className="card-header"
+        sx={{ padding: "10px 16px" }}
+        action={
+          loading ? null : (
+            <div className="iconButtonSec">
+              <IconButton aria-label="delete" color="error">
+                {/* <DeleteIcon /> */}
+              </IconButton>
+              <IconButton aria-label="edit" color="success">
+                {routerLocation?.state?.edit && (
+                  <EditIcon onClick={() => setOpen(true)} />
+                )}
+                <EditBlog
+                  open={open}
+                  handleClose={() => setOpen(false)}
+                  data={data}
+                />
+              </IconButton>
+            </div>
+          )
+        }
       />
       {loading ? (
         <Skeleton sx={{ height: 400 }} animation="wave" variant="rectangular" />
@@ -105,11 +134,7 @@ function Media(props) {
             <Skeleton animation="wave" height={10} width="80%" />
           </React.Fragment>
         ) : (
-          <Typography
-            variant="body2"
-            component="p"
-            className="title"
-          >
+          <Typography variant="body2" component="p" className="title">
             {data?.blogTitle}
           </Typography>
         )}
@@ -117,10 +142,7 @@ function Media(props) {
       <CardContent>
         {loading ? (
           <React.Fragment>
-            <Skeleton
-              animation="wave"
-              height={10}
-            />
+            <Skeleton animation="wave" height={10} />
             <Skeleton animation="wave" height={10} width="80%" />
           </React.Fragment>
         ) : (
@@ -221,9 +243,10 @@ Media.propTypes = {
   loading: PropTypes.bool,
 };
 
-export default function DetailsCardCom({ data, loading, path }) {
+export default function DetailsCardCom({ data, loading, path,edit }) {
   const auth = getAuth();
   const db = getFirestore();
+  const navigate = useNavigate();
   const [uid, setUid] = useState(null);
   const [alreadyLogin, setAlreadyLogin] = useState(false);
   const [modelOpen, setModelOpen] = useState(false);
@@ -232,7 +255,6 @@ export default function DetailsCardCom({ data, loading, path }) {
   const [commentRes, setCommentRes] = useState(false);
   const [commentLoading, setCommentLoading] = useState(false);
   const [userData, setUserData] = useState({});
-
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -347,7 +369,7 @@ export default function DetailsCardCom({ data, loading, path }) {
                   sx={{ height: "40px", width: "40px" }}
                   className="share-icon"
                 />
-                Share this content
+                Share this content Please
               </h2>
             </Grid>
 
@@ -417,21 +439,20 @@ export default function DetailsCardCom({ data, loading, path }) {
           </Grid>
           <Grid className="share-Handle-Sec" container>
             <Grid container size={{ xl: 12, lg: 12, md: 12, sm: 12, xs: 12 }}>
-              <Grid
+              {/* <Grid
                 className="emptyGrid"
                 size={{ xl: 5, lg: 5, md: 4, sm: 4, xs: 12 }}
-              >
-              </Grid>
+              ></Grid> */}
               <Grid
                 className="buttonAndParag"
-                size={{ xl: 2, lg: 2, md: 4, sm: 4, xs: 12 }}
+                size={{ xl: 12, lg: 12, md: 12, sm: 12, xs: 12 }}
               >
-                <h2>Add Comment</h2>
+                <h2 style={{ textAlign: "center" }}>Add Comment</h2>
               </Grid>
-              <Grid
+              {/* <Grid
                 className="emptyGrid"
                 size={{ xl: 5, lg: 5, md: 4, sm: 4, xs: 12 }}
-              ></Grid>
+              ></Grid> */}
             </Grid>
 
             <Grid
@@ -485,7 +506,9 @@ export default function DetailsCardCom({ data, loading, path }) {
           </Grid>
           <div className="userComments-Sec">
             <h2 className="headingTwo">
-              {(data?.comment?.length > 1 ) ? `${data?.comment?.length} Comments` : `${data?.comment?.length} Comment`}
+              {data?.comment?.length > 1
+                ? `${data?.comment?.length} Comments`
+                : `${data?.comment?.length} Comment`}
             </h2>
             <CommentComponent data={data?.comment} />
           </div>
