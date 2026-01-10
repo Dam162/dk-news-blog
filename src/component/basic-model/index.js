@@ -29,7 +29,7 @@ export default function BasicModal({ open, handleClose }) {
           <Button
             onClick={() => {
               handleClose();
-              navigate("/login");
+              navigate("/sign-in");
             }}
             variant="contained"
             className="login-btn"

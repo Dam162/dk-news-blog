@@ -19,14 +19,7 @@ import { doc, onSnapshot, getFirestore } from "firebase/firestore";
 
 function Navbar() {
   // const pages = ["Products", "Pricing", "Blog"];
-  const settings = [
-    "Profile",
-    "Dashboard",
-    "Create Blog",
-    "SignIn",
-    "SignUp",
-    "Logout",
-  ];
+  const settings = ["Profile", "Dashboard", "Create Blog", "Logout"];
   const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -86,10 +79,6 @@ function Navbar() {
       navigate("/profile");
     } else if (setting === "Dashboard") {
       navigate("/dashboard");
-    } else if (setting === "SignIn") {
-      navigate("/sign-in");
-    } else if (setting === "SignUp") {
-      navigate("/sign-up");
     } else if (setting === "Create Blog") {
       console.log("Create Blog");
       navigate("/create-blog");
@@ -117,7 +106,7 @@ function Navbar() {
               textDecoration: "none",
             }}
           >
-            LOGO
+            DK News Blog
           </Typography>
 
           {/* <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -171,7 +160,7 @@ function Navbar() {
               textDecoration: "none",
             }}
           >
-            LOGO
+            DK News Blog
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {/* {pages.map((page) => (
@@ -199,9 +188,9 @@ function Navbar() {
               <Button
                 variant="outlined"
                 style={{ color: "white" }}
-                onClick={() => navigate("/Login")}
+                onClick={() => navigate("/sign-in")}
               >
-                Log In
+                Sign In
               </Button>
             )}
 

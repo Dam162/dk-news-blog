@@ -20,7 +20,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import "./index.css";
 const language = "en";
 function Media(props) {
-  const { loading, data, uid } = props;
+  const { loading, data, uid, edit } = props;
   const isLiked = data?.like?.includes(uid);
   const navigate = useNavigate();
   console.log("-----UserData----->>>>>>", data);
@@ -28,7 +28,10 @@ function Media(props) {
   return (
     <Card
       className="card"
-      onClick={() => !loading && navigate(`/blog-details/${data?.blogID}`)}
+      onClick={() =>
+        !loading &&
+        navigate(`/blog-details/${data?.blogID}`, { state: { edit: edit } })
+      }
     >
       <CardHeader
         avatar={
@@ -209,7 +212,7 @@ Media.propTypes = {
   loading: PropTypes.bool,
 };
 
-export default function CardCom({ data, loading }) {
+export default function CardCom({ data, loading, edit }) {
   const auth = getAuth();
   const [uid, setUid] = useState("");
   console.log("-------data-------", data);
@@ -230,7 +233,7 @@ export default function CardCom({ data, loading }) {
           {(loading ? Array.from(new Array(18)) : data).map((item, index) => (
             // here in item receives value form data var we passed
             <Grid size={{ xl: 2, lg: 3, md: 4, sm: 6, xs: 12 }}>
-              <Media loading={loading} data={item} uid={uid} />
+              <Media loading={loading} data={item} uid={uid} edit={edit} />
             </Grid>
           ))}
         </Grid>

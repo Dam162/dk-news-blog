@@ -74,11 +74,7 @@ const CreateBlog = () => {
       toast.error("Details required...!!!", {
         position: "top-right",
       });
-    } else if (blogTitle.length < 70) {
-      toast.error("Title must greater than 70...!!!", {
-        position: "top-right",
-      });
-    } else if (blogDetails.length < 170) {
+    }  else if (blogDetails.length < 170) {
       toast.error("Details must greater than 170...!!!", {
         position: "top-right",
       });

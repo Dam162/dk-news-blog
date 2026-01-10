@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import "./index.css";
 import googleIcon from "./../../images/logo_16509564.png";
 import facebookIcon from "./../../images/facebook.png";
@@ -16,14 +16,75 @@ import FormControl from "@mui/material/FormControl";
 import TextField from "@mui/material/TextField";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import CircularProgress from "@mui/material/CircularProgress";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+} from "firebase/auth";
+import { getFirestore, doc, setDoc, Firestore } from "firebase/firestore";
 export default function SlotsSignUp() {
   const [showPassword, setShowPassword] = React.useState(false);
   const navigate = useNavigate();
-
+  const auth = getAuth();
+  const db = getFirestore();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (event) => event.preventDefault();
   const handleMouseUpPassword = (event) => event.preventDefault();
+
+  const signUpHandler = async () => {
+    if (name === "") {
+      toast.error("Name required...!!!", {
+        position: "top-right",
+      });
+    } else if (email === "") {
+      toast.error("Email. required...!!!", {
+        position: "top-right",
+      });
+    } else if (password === "") {
+      toast.error("Password required...!!!", {
+        position: "top-right",
+      });
+    } else {
+      setLoading(true);
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          sendEmailVerification(auth.currentUser).then(async () => {
+            await setDoc(doc(db, "users", user.uid), {
+              name: name,
+              email: email,
+            });
+            toast.success("Success...!!!", {
+              position: "top-right",
+            });
+            setLoading(false);
+            const userData = {
+              name: name,
+              email: email,
+            };
+            console.log("User Data : -", user);
+            navigate("/email-verification");
+          });
+        })
+        .catch((error) => {
+          const errorMessage = error.message;
+          toast.error(errorMessage, {
+            position: "top-right",
+          });
+          setLoading(false);
+        });
+      setName("");
+      setEmail("");
+      setPassword("");
+    }
+  };
 
   return (
     <Box className="signUp-box">
@@ -35,6 +96,8 @@ export default function SlotsSignUp() {
               label="Username"
               variant="outlined"
               fullWidth
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               type="text"
               className="signUp-input"
               slotProps={{
@@ -54,6 +117,8 @@ export default function SlotsSignUp() {
               variant="outlined"
               fullWidth
               type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="signUp-input"
               slotProps={{
                 input: {
@@ -76,6 +141,8 @@ export default function SlotsSignUp() {
             <OutlinedInput
               id="password"
               type={showPassword ? "text" : "password"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               startAdornment={
                 <InputAdornment position="start">
                   <LockOutlinedIcon />
@@ -103,12 +170,17 @@ export default function SlotsSignUp() {
             variant="contained"
             fullWidth
             className="signUp-button"
+            onClick={signUpHandler}
           >
-            Sign Up
+            {loading ? (
+              <CircularProgress style={{ color: "white" }} size={20} />
+            ) : (
+              "Sign Up"
+            )}
           </Button>
           <span className="no-Account">
             Already have account!{" "}
-            <a onClick={() => navigate("/sign-in")}>Login</a>
+            <a onClick={() => navigate("/sign-in")}>Sign in</a>
           </span>
         </Grid>
       </Grid>

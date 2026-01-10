@@ -56,7 +56,12 @@ const Details = () => {
             <ArrowBackIcon fontSize="inherit" />
           </IconButton>
         </div>
-        <DetailsCardCom data={blog} loading={loading} path={path} />
+        <DetailsCardCom
+          data={blog}
+          loading={loading}
+          path={path}
+          edit={detailsLoc?.state?.edit}
+        />
       </Box>
     </div>
   );

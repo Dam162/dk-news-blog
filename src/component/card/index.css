@@ -52,7 +52,6 @@
 }
 #comntSec {
   /* background-color: bisque; */
-
 }
 #comntParag {
   margin-bottom: 2px;
@@ -62,6 +61,7 @@
 }
 .card {
   height: 100%;
+  /* background-color: aquamarine; */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -71,8 +71,9 @@
 .mediaImgVideo {
   width: 100%;
   height: 200px; /* Fixed height for uniformity */
+  /* background-color: aquamarine- !important; */
   overflow: hidden;
-  padding: 0 10px;
+  /* padding: 0 10px; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -83,7 +84,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 8px;
+  /* border-radius: 8px; */
 }
 
 /* Videos inside media */
@@ -92,13 +93,13 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 8px;
+  /* border-radius: 8px; */
 }
 
 /* Optional: if you're using ReactPlayer */
 .mediaImgVideo > div {
   width: 100% !important;
   height: 100% !important;
-  border-radius: 8px;
+  /* border-radius: 8px; */
   overflow: hidden;
 }
